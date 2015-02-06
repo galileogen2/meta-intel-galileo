@@ -9,7 +9,14 @@ start_handler()
 {
     type dmidecode > /dev/null 2>&1 || die "dmidecode not installed"
     board=$(dmidecode -s baseboard-product-name)
-    case "$board" in *"Galileo" ) start_galileod ;; esac
+    case "$board" in
+        *"Galileo" )
+                   start_galileod
+                   ;;
+        *"GalileoGen2" )
+                   start_galileod
+                   ;;
+    esac
 }
 
 start_galileod()

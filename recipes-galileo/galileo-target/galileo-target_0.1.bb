@@ -6,7 +6,9 @@ SRC_URI = "file://galileo-target.tar.bz2 \
            file://launcher.sh \
            file://galileo-target.service \
            file://galileo_target_1.0.1_upgrade.patch \
-           file://usb_improv_patch-1.patch"
+           file://usb_improv_patch-1.patch \
+           file://autodetect_pins_galileo.patch \
+           file://galileo-sketch-reset.service"
 
 INSTALLDIR = "/opt/cln/galileo"
 FILES_${PN} += "${INSTALLDIR} \
@@ -25,7 +27,8 @@ do_install() {
 
         install -d ${D}${systemd_unitdir}/system
         install -m 0644 ${WORKDIR}/galileo-target.service ${D}${systemd_unitdir}/system/
+        install -m 0644 ${WORKDIR}/galileo-sketch-reset.service ${D}${systemd_unitdir}/system/
 }
 
 inherit systemd
-SYSTEMD_SERVICE_${PN} = "galileo-target.service"
+SYSTEMD_SERVICE_${PN} = "galileo-target.service galileo-sketch-reset.service"

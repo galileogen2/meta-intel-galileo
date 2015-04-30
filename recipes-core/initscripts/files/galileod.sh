@@ -1,9 +1,7 @@
 #!/bin/sh
 
 pidfile=/var/run/launcher.pid
-pidsreset=/var/run/sketch_reset.pid
 launcher=/opt/cln/galileo/launcher.sh
-sreset=/opt/cln/galileo/galileo_sketch_reset
 
 start_handler()
 {
@@ -23,16 +21,13 @@ start_galileod()
 {
     echo "Starting galileod"
     start-stop-daemon -q -S -m -p $pidfile -b -x $launcher
-    start-stop-daemon -q -S -m -p $pidsreset -b -x $sreset
 }
 
 stop_handler()
 {
     echo "Stopping galileod"
     start-stop-daemon -q -K -p $pidfile -s USR1
-    start-stop-daemon -q -K -p $pidsreset
     rm $pidfile -f
-    rm $pidsreset -f
 }
 
 die()

@@ -2,6 +2,7 @@
 GALILEO_PATH="/opt/cln/galileo"
 CLLOADER="$GALILEO_PATH/clloader"
 CLLOADER_OPTS="--escape --binary --zmodem --disable-timeouts"
+SKETCH_RESET="$GALILEO_PATH/galileo_sketch_reset"
 
 mytrap()
 {
@@ -13,6 +14,8 @@ trap 'mytrap' USR1
 
 arduino_services()
 {
+  $SKETCH_RESET $sketch_reset_params &
+
   keepgoing=true
   while $keepgoing
   do
@@ -28,9 +31,11 @@ board=$(dmidecode -s baseboard-product-name)
 case "$board" in
     *"Galileo" )
                galileo_board=true
+               sketch_reset_params="-i 52 -o 53"
                ;;
     *"GalileoGen2" )
                galileo_board=true
+               sketch_reset_params="-i 63 -o 47"
                ;;
 esac
 

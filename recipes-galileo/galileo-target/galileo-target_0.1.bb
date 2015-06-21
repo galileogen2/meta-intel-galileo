@@ -15,6 +15,8 @@ FILES_${PN} += "${INSTALLDIR} \
                 ${systemd_unitdir}/system/"
 FILES_${PN}-dbg += "${INSTALLDIR}/.debug"
 
+RDEPENDS_${PN} = "dmidecode"
+
 do_compile() {
 	make
 }
